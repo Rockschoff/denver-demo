@@ -6,18 +6,16 @@ import {
   BookOpen,
   Bot,
   Command,
-  Frame,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
+  MessageCircle,
   SquareTerminal,
+  Home
 } from "lucide-react"
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { NavMain } from "@/components/sidebar/nav-main"
+import { NavChats } from "@/components/sidebar/nav-chats"
+import { NavUser } from "@/components/sidebar/nav-user"
+import { TeamSwitcher } from "@/components/sidebar/team-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -53,41 +51,54 @@ const data = {
     },
   ],
   navMain: [
+    {title : "Home",url:"#",icon:Home,items:[]},
     {
-      title: "Playground",
+      title: "Systems",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Presage",
           url: "#",
         },
         {
-          title: "Starred",
+          title: "Ignition",
           url: "#",
         },
         {
-          title: "Settings",
+          title: "Complaints",
+          url: "#",
+        },
+        {
+          title: "CAPA",
+          url: "#",
+        },
+        {
+          title: "Holds",
           url: "#",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Tools",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
+          title: "Data Insights Chat",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "Graph Creator",
           url: "#",
         },
         {
-          title: "Quantum",
+          title: "Audit Center",
+          url: "#",
+        },
+        {
+          title: "Forecasts",
           url: "#",
         },
       ],
@@ -115,45 +126,22 @@ const data = {
         },
       ],
     },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
   ],
-  projects: [
+  chats: [
     {
-      name: "Design Engineering",
+      name: "Lab Testing Failures",
       url: "#",
-      icon: Frame,
+      icon: MessageCircle,
     },
     {
-      name: "Sales & Marketing",
+      name: "About Open Holds",
       url: "#",
-      icon: PieChart,
+      icon: MessageCircle,
     },
     {
-      name: "Travel",
+      name: "Introduction",
       url: "#",
-      icon: Map,
+      icon: MessageCircle,
     },
   ],
 }
@@ -175,7 +163,7 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavChats chats={data.chats} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

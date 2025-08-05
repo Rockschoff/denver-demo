@@ -1,6 +1,7 @@
 "use client"
 
 import { ChevronRight, type LucideIcon } from "lucide-react"
+import { useCurrentPageSelection } from "@/lib/zustandStores" // 1. Import the store
 
 import {
   Collapsible,
@@ -23,7 +24,7 @@ export function NavMain({
 }: {
   items: {
     title: string
-    url: string
+    url:string
     icon?: LucideIcon
     isActive?: boolean
     items?: {
@@ -32,6 +33,9 @@ export function NavMain({
     }[]
   }[]
 }) {
+  // 2. Get the action from the store
+  const { setSelection } = useCurrentPageSelection()
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -48,7 +52,9 @@ export function NavMain({
                 <SidebarMenuButton tooltip={item.title}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  {item.items && item.items.length > 0 && (
+                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  )}
                 </SidebarMenuButton>
               </CollapsibleTrigger>
               <CollapsibleContent>
@@ -56,7 +62,11 @@ export function NavMain({
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
+                        {/* 3. Add onClick handler to the link */}
+                        <a 
+                           href={subItem.url}
+                           onClick={() => setSelection({ item: subItem.title, parent: item.title, url: subItem.url })}
+                        >
                           <span>{subItem.title}</span>
                         </a>
                       </SidebarMenuSubButton>
