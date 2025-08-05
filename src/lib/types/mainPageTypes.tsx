@@ -1,6 +1,7 @@
-interface Summary {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export interface Summary {
     dailySummary : DailySummaryConfig
-    performanceSummary : PerformanceSummaryConfig
+    performanceSummary : any
     systemName : string
 }
 
