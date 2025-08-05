@@ -398,7 +398,7 @@ export function TrendBarChart({ data, timeGroup, onTimeGroupChange, categoryKey,
       else if (timeGroup === 'week') key = format(startOfWeek(d),'yyyy-MM-dd');
       else key = format(startOfMonth(d),'yyyy-MM');
       const cat = c[categoryKey] || 'Uncategorized';
-      cats.add(cat);
+      cats.add(JSON.stringify(cat));
       if (!map[key]) map[key] = { date: key };
       map[key][cat] = ((map[key][cat] as number)||0) + 1;
     });

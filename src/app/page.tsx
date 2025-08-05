@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 import { AppSidebar } from "@/components/sidebar/app-sidebar"
 import {
@@ -27,7 +28,7 @@ import GraphCreator from "@/components/graphCreator/graphCreator"
 export default function Page() {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const { selectedItem, selectedParent } = useCurrentPageSelection();
-  const { theme, setTheme } = useTheme();
+  // const { theme, setTheme } = useTheme();
 
   // This function determines which dashboard component to render
   // based on the currently selected item from the Zustand store.

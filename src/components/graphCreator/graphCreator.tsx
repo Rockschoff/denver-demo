@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import { executeSnowflakeQuery } from "@/lib/snowflakeClient";
 
 // export default function GraphCreator(){

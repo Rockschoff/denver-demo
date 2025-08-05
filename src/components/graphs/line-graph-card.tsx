@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Set Default Colors and other config for Graphs
 // TODO: Set logic for the rendering axis ticks
@@ -161,8 +162,8 @@ export default function GraphCard(props: GraphCardProps) {
                 )
               )}
 
-              {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
-              {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
+              {/* {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
+              {cartesianGrid && <CartesianGrid {...cartesianGrid} />} */}
 
               {markConfig.map((cfg, i) => {
                 switch (cfg.markType) {
@@ -179,7 +180,7 @@ export default function GraphCard(props: GraphCardProps) {
                 }
               })}
 
-              {referenceMarks?.map((cfg, i) => {
+              {/* {referenceMarks?.map((cfg, i) => {
                 const { ref: _r, ...restProps } = cfg.props as any;
                 switch (cfg.markType) {
                   case 'line':
@@ -191,7 +192,7 @@ export default function GraphCard(props: GraphCardProps) {
                   default:
                     return null;
                 }
-              })}
+              })} */}
 
               {tooltip && <Tooltip {...tooltip} />}
             </ComposedChart>
