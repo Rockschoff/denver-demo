@@ -37,7 +37,7 @@ export function ChatMessage({ message, onCommentSubmit }: ChatMessageProps) {
 
   // Convert markdown → sanitized HTML
   const html = useMemo(() => {
-    const raw = marked.parse(message.text || "")
+    const raw = marked.parse(message.text || "") as string
     return DOMPurify.sanitize(raw)
   }, [message.text])
 
