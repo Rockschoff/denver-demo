@@ -53,7 +53,16 @@ export const useCurrentPageSelection = create<PageSelectionState>((set) => ({
 
 import { persist } from "zustand/middleware";
 
-export type SavedGraph = { name: string; data: any[] };
+export type SavedGraph = {
+  name: string;
+  data: { X: any; Y: number; Y2?: number }[];
+  agg1: string;
+  agg2?: string;
+  useSecondary: boolean;
+  showTrend ?:boolean,
+  showMA ?: boolean,
+  maWindows? : number[],
+};
 
 interface GraphState {
   graphs: SavedGraph[];

@@ -69,6 +69,7 @@ export default function AuditCenter() {
   const renderSfqEvidence = () => (
     <div className="mt-8 animate-in fade-in-50 duration-500">
       {/* --- Section 1: ATP Testing Evidence --- */}
+      <Button>Track More Evidences +</Button>
       <div className="p-6 border rounded-lg">
         <h2 className="text-xl font-semibold tracking-tight">Evidence: Cleaning Verification & Monitoring</h2>
         <blockquote className="mt-2 pl-4 italic border-l-2">
@@ -142,6 +143,7 @@ export default function AuditCenter() {
 
   const renderFdaEvidence = () => (
       <div className="mt-8 animate-in fade-in-50 duration-500">
+        <Button>Track More Evidences +</Button>
           <Card>
               <CardHeader>
                   <CardTitle>FDA Checks & Evidence</CardTitle>
@@ -160,7 +162,7 @@ export default function AuditCenter() {
     <div className="w-full h-full p-6">
       <h1 className="text-2xl font-bold tracking-tight">Example Audit Checks</h1>
       <p className="text-muted-foreground">Select an audit type to view relevant requirements and evidence.</p>
-
+      <Button>Add Another Regulatory Framework +</Button>
       <div className="flex gap-4 mt-6">
         {/* Card 1: SQF Requirements Check */}
         <Card

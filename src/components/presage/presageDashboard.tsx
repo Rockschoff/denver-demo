@@ -153,7 +153,7 @@ function MultiSelectComboBox({ options, selected, onChange, placeholder }: Multi
 export default function PresageDashboard() {
   const [allCombinations, setAllCombinations] = useState<FilterDataRow[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isEditMode , setIsEditingMode] = useState(true)
+  const [isEditMode , setIsEditingMode] = useState(false)
   
   // **STEP 1: Create state to hold the SUBMITTED filters**
   const [appliedFilters, setAppliedFilters] = useState<FormValues | null>({
@@ -168,7 +168,7 @@ export default function PresageDashboard() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       workOrderTitles: [],
-      testNames: [],
+      testNames: ["Environmental"],
       analysisOptionNames: [],
       locations: [],
       productNames: [],
@@ -289,6 +289,7 @@ export default function PresageDashboard() {
                     selected={field.value ?? []}
                     onChange={field.onChange}
                     placeholder="Select Test Names..."
+                    
                   />
                   <FormMessage />
                 </FormItem>

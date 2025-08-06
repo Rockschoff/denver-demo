@@ -155,8 +155,18 @@ export default function ChatSection() {
   return (
     // This makes the layout robust.
     <div className="flex flex-col w-full max-w-4xl mx-auto bg-background h-full max-h-full rounded-lg border">
-
-      <ScrollArea className="flex-1 overflow-y-scroll p-4">
+      <div className="w-full justify-center items-center p-4 bg-main-iq">
+        <p className="heading-font text-center text-xl">Data Insights</p>
+      </div>
+      <ScrollArea className="flex-1 overflow-y-scroll p-4"
+      style={{
+          backgroundImage: "url('./logoshield.svg')",
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '200px 200px',
+          opacity: 0.6
+        }}
+        >
         <div className="space-y-6">
           {messages.map(message => (
             <ChatMessage key={message.id} message={message} onCommentSubmit={()=>{console.log("Comment Registered")}} />

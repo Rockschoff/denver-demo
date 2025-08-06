@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useCurrentPageSelection } from '@/lib/zustandStores';
+import { Separator } from '../ui/separator';
 // import { HeatmapChart } from '@/components/graphs/HeatmapChart'; // Adjust path if needed
 
 // --- Queries (as provided in the prompt) ---
@@ -196,6 +197,10 @@ export default function HomePage() {
 
     return (
         <div className="w-full h-full p-4 md:p-6 space-y-6">
+            <div className="w-full justify-center items-center p-4 bg-main-iq">
+                <p className="heading-font text-center text-xl">Daily Insights</p>
+            </div>
+            <Separator/>
             {/* Traffic-light overview */}
             <div className="flex flex-wrap gap-8 justify-center">
             {trafficLightData.map(d => (
@@ -240,7 +245,10 @@ export default function HomePage() {
                     <AlertDescription>{error}</AlertDescription>
                 </Alert>
             )}
-
+            <div className="w-full justify-center items-center p-4 bg-main-iq">
+                <p className="heading-font text-center text-xl">Performance Insights</p>
+            </div>
+            <Separator/>
             {!isLoading && !error && chartData && (
                 <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
                     {heatMapQueries.map(({ systemName, xField, yField }) => (

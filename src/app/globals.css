@@ -255,6 +255,37 @@
   }
 }
 
+@theme {
+  --color-darkmain: #5b3b20;
+  --color-secondary-iq: #d6b27e;
+  --color-border-iq: #c6a46b;
+  --color-beam-iq: rgba(236, 72, 153, 0.3);
+  --color-main-iq: #fef3dc;
+  --color-placeholder-iq: #808080e2;
+  --color-sidebar-iq: #374151;
+}
+
 .animate-slide-in {
   animation: slide-in 300ms ease-out forwards;
+}
+
+
+@font-face {
+    font-family: 'Copperplate Gothic Bold';
+    src: url('/fonts/Copperplate Gothic Bold V2.woff2') format('woff2'),
+         url('/fonts/Copperplate Gothic Bold V2.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bell-MT';
+    src: url('/fonts/Bell MT.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+/* Fallback font if Copperplate Gothic Bold isn't available */
+.heading-font {
+    font-family: 'Copperplate Gothic Bold', 'Copperplate Gothic', Copperplate, serif;
 }

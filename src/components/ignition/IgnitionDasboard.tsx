@@ -270,7 +270,7 @@ export default function IgnitionDashboard() {
     <div className="container mx-auto p-4 space-y-6">
       <h1 className="text-3xl font-bold">Ignition</h1>
       <p className="text-blue-500 hover:underline cursor-pointer" onClick={()=>{setShowSavedGraphs(!showSavedGraphs)}}>Show Saved Graphs</p>
-      {showSavedGraphs??(<div className="w-full p-4 rounded-2xl">
+      {showSavedGraphs && (<div className="w-full p-4 rounded-2xl">
         <SavedCharts/>
       </div>)}
       
