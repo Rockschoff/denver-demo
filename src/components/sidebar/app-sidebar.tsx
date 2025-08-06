@@ -167,10 +167,11 @@ export function AppSidebar({
         <NavChats chats={data.chats} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
-        <Button variant="ghost" size="sm" onClick={onToggleChat}>
-           {isChatOpen ? "Close Chat" : "Open Chat"}
+        <Button variant="ghost" size="sm" onClick={onToggleChat} className="heading-font">
+           {isChatOpen ? "InQ" : "InQ"}
         </Button>
+        <NavUser user={data.user} />
+        
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

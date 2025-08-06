@@ -21,6 +21,66 @@ import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
+const mockAnswer = `
+---
+
+## 🧾 **Executive Summary**
+
+Over the past 7 days, three notable issues were observed in the Presage system at the Denver Plant. These issues span ozone interlock, ATP testing, and chlorine verification processes, with result statuses indicating **OUT\_OF\_BOUNDS**, **ERROR**, and **WARNING**, respectively. The nature and location of these issues suggest potential non-compliance or drift in critical water quality monitoring systems.
+
+---
+
+## 📝 **Description of Issues and Problems**
+
+### 🔹 **2025-08-03 – Aquafina Ozone Interlock Verification**
+
+* **Analysis Option:** Set OOS Output mA to:
+* **Result Status:** OUT\_OF\_BOUNDS
+* **Result Value:** 5.52
+* **Location:** DEN1
+* **Problem:** The output current for the ozone interlock exceeded acceptable bounds, indicating a potential malfunction or misconfiguration in the ozone monitoring/control system.
+
+---
+
+### 🔹 **2025-08-03 – Weekly ATP - DEN1 (Autocreated)**
+
+* **Analysis Option:** ATP #1
+* **Result Status:** ERROR
+* **Result Value:** 97
+* **Location:** DEN1-Env-FillHeadValve1
+* **Problem:** An error was logged during ATP testing, with an unusually high reading of 97, suggesting possible contamination or instrumentation failure in the fill head valve environment.
+
+---
+
+### 🔹 **2025-08-03 – Daily Chlorine Verification**
+
+* **Analysis Option:** Difference between Handheld Chlorine & In-Line Reading
+* **Result Status:** WARNING
+* **Result Value:** 0.05
+* **Location:** RO1
+* **Problem:** A discrepancy between handheld and in-line chlorine measurements triggered a warning, which could indicate sensor drift, calibration issues, or procedural inconsistency.
+
+---
+
+## 📌 **Conclusion**
+
+The Presage system has flagged multiple deviations that could affect product quality or regulatory compliance. These include signal anomalies, potential microbial contamination indicators, and chlorine measurement mismatches—all within critical monitoring zones.
+
+---
+
+## 🔧 **Recommendations**
+
+1. **Investigate and calibrate** the ozone interlock system at DEN1 immediately.
+2. **Retest and sanitize** the environment around FillHeadValve1; inspect for ATP contamination sources.
+3. **Cross-validate chlorine sensors** at RO1 and retrain operators on handheld reading protocols.
+4. **Log follow-ups** for each issue in the audit center and verify resolution in subsequent cycles.
+
+---
+
+Let me know if you want this exported as a PDF or formatted for a dashboard.
+
+`
+
 // Import the ChatMessage component where markdown rendering and actions are handled.
 import { ChatMessage } from "./chatSectionComponents/chat-message"
 
@@ -101,19 +161,19 @@ export default function ChatSection() {
         disliked : false,
         comment : "",
         // Example images for demonstration
-        images: ["https://picsum.photos/seed/1/300/300", "https://picsum.photos/seed/2/300/300", "https://picsum.photos/seed/3/300/300", "https://picsum.photos/seed/4/300/300", "https://picsum.photos/seed/5/300/300"],
+        images: ["./image.png", "./image3.png", "./image2.png"],
       }
       setMessages(prev => [...prev, initialLlmMessage])
 
       // MOCK API STREAM
-      const fullResponse = `**This is a streamed response from the LLM.** \n\n # Hello All`;
+      const fullResponse = mockAnswer;
       const words = fullResponse.split(" ")
 
       for (const word of words) {
         if (abortControllerRef.current.signal.aborted) {
           throw new DOMException("Aborted", "AbortError")
         }
-        await new Promise(resolve => setTimeout(resolve, 50)) // Simulate network delay
+        await new Promise(resolve => setTimeout(resolve, 2)) // Simulate network delay
         setMessages(prev =>
           prev.map(msg =>
             msg.id === llmMessageId ? { ...msg, text: msg.text + word + " " } : msg
