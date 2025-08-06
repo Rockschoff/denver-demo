@@ -48,6 +48,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
+import { useCurrentPageSelection } from '@/lib/zustandStores';
+import { SavedCharts } from '../graphCreator/savedChart';
 // import PresageGraphs from './presageGraphs'; // Assuming it's in a separate file
 
 // --- TYPE DEFINITIONS ---
@@ -154,6 +156,8 @@ export default function PresageDashboard() {
   const [allCombinations, setAllCombinations] = useState<FilterDataRow[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditMode , setIsEditingMode] = useState(false)
+  const setSelection = useCurrentPageSelection(s=>s.setSelection)
+  const [showSavedGraphs , setShowSavedGraphs] = useState(false)
   
   // **STEP 1: Create state to hold the SUBMITTED filters**
   const [appliedFilters, setAppliedFilters] = useState<FormValues | null>({
@@ -247,14 +251,24 @@ export default function PresageDashboard() {
            <DropdownMenuItem onSelect={() => {/* TODO: change layout */}}>
              Change layout
            </DropdownMenuItem>
-           <DropdownMenuItem onSelect={() => {/* TODO: add graphs */}}>
-             Add graphs
+           <DropdownMenuItem onSelect={() => {setSelection({item : "Graph Creator" , parent : "Tools" , url:"#"})}}>
+             Create and Add Graph
+           </DropdownMenuItem>
+           <DropdownMenuItem onSelect={() => {setShowSavedGraphs(true)}}>
+             Saved Graphs
            </DropdownMenuItem>
            <DropdownMenuItem onSelect={() => {/* TODO: explore data */}}>
              Explore data
            </DropdownMenuItem>
          </DropdownMenuContent>
        </DropdownMenu>):<></>}
+
+       {showSavedGraphs && (<div className="w-full p-4 rounded-2xl">
+               <SavedCharts/>
+               <Button variant={"destructive"} onClick={()=>{setShowSavedGraphs(false)}}>Close</Button>
+        </div>)}
+
+       
       
       <h1 className="text-2xl font-bold mb-4">Presage Dashboard Filters</h1>
       <PresageRecentSummaryGraphs isEditMode={isEditMode}></PresageRecentSummaryGraphs>
