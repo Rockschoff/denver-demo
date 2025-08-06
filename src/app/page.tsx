@@ -93,6 +93,10 @@ export default function Page() {
               </BreadcrumbList>
             </Breadcrumb>
           </div>
+          <div className="flex-1 text-center text-xl font-semibold heading-font">
+          Quality Performance Forecast
+        </div>
+        <div className="w-16" />
         </header>
         <div className="flex h-[95vh] ">
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0 overflow-y-auto">
