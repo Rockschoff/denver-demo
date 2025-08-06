@@ -104,7 +104,7 @@ const data = {
       ],
     },
     {
-      title: "Documentation",
+      title: "Help Center",
       url: "#",
       icon: BookOpen,
       items: [
@@ -126,6 +126,7 @@ const data = {
         },
       ],
     },
+    {title : "Super User Controls",url:"#",icon:Home,items:[]}
   ],
   chats: [
     {

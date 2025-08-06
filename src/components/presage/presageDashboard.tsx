@@ -27,7 +27,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { format } from 'date-fns';
-import { Calendar as CalendarIcon, Check, ChevronsUpDown, X } from 'lucide-react';
+import { Calendar as CalendarIcon, Check, ChevronsUpDown, DeleteIcon, EditIcon, Settings2Icon, X } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 
 import { executeSnowflakeQuery } from '@/lib/snowflakeClient';
@@ -42,6 +42,12 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/components/
 import { Badge } from '@/components/ui/badge';
 import { PresageGraphs } from './presageGraphs';
 import PresageRecentSummaryGraphs from "./presageRecentSummaryGraphs"
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 // import PresageGraphs from './presageGraphs'; // Assuming it's in a separate file
 
 // --- TYPE DEFINITIONS ---
@@ -147,9 +153,16 @@ function MultiSelectComboBox({ options, selected, onChange, placeholder }: Multi
 export default function PresageDashboard() {
   const [allCombinations, setAllCombinations] = useState<FilterDataRow[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isEditMode , setIsEditingMode] = useState(true)
   
   // **STEP 1: Create state to hold the SUBMITTED filters**
-  const [appliedFilters, setAppliedFilters] = useState<FormValues | null>(null);
+  const [appliedFilters, setAppliedFilters] = useState<FormValues | null>({
+      workOrderTitles: [],
+      testNames: ["Environmental"],
+      analysisOptionNames: [],
+      locations: [],
+      productNames: [],
+    });
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -223,9 +236,30 @@ export default function PresageDashboard() {
   
   return (
     <div className="p-4 md:p-8">
+      <EditIcon className='border  border-2 rounded-lg ' onClick={()=>{setIsEditingMode(!isEditMode)}}></EditIcon>
+      {/* <TASK> : when you click on the settings Icon it should open a dropdown that says change layout on one, add graphs in another option , explore data another option */}
+      
+        {isEditMode?( <DropdownMenu>
+         <DropdownMenuTrigger asChild>
+           <Settings2Icon className="border border-2 rounded-lg cursor-pointer ml-2" />
+         </DropdownMenuTrigger>
+         <DropdownMenuContent align="start">
+           <DropdownMenuItem onSelect={() => {/* TODO: change layout */}}>
+             Change layout
+           </DropdownMenuItem>
+           <DropdownMenuItem onSelect={() => {/* TODO: add graphs */}}>
+             Add graphs
+           </DropdownMenuItem>
+           <DropdownMenuItem onSelect={() => {/* TODO: explore data */}}>
+             Explore data
+           </DropdownMenuItem>
+         </DropdownMenuContent>
+       </DropdownMenu>):<></>}
+      
       <h1 className="text-2xl font-bold mb-4">Presage Dashboard Filters</h1>
-      <PresageRecentSummaryGraphs></PresageRecentSummaryGraphs>
+      <PresageRecentSummaryGraphs isEditMode={isEditMode}></PresageRecentSummaryGraphs>
       <Form {...form}>
+        {isEditMode && <DeleteIcon className='border  border-2 rounded-lg text-red-500'></DeleteIcon>}
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-6 border rounded-lg">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <FormField
@@ -358,7 +392,7 @@ export default function PresageDashboard() {
       <div className="mt-8">
         {appliedFilters ? (
             
-          <PresageGraphs filters={appliedFilters} />
+          <PresageGraphs filters={appliedFilters} isEditMode={isEditMode} />
         ) : (
           <div className="text-center text-muted-foreground p-10 border-2 border-dashed rounded-lg">
             Apply filters to view graphs

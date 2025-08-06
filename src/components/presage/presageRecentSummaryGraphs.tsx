@@ -5,6 +5,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { format, subDays } from 'date-fns';
 import { executeSnowflakeQuery } from '@/lib/snowflakeClient';
+import {DeleteIcon} from "lucide-react"
 
 // Shadcn UI Components
 import { Button } from '@/components/ui/button';
@@ -36,12 +37,13 @@ type FailureSummary = {
 };
 
 // --- Main Component ---
-export default function PresageRecentSummaryGraphs() {
+export default function PresageRecentSummaryGraphs({isEditMode}:{isEditMode : boolean}) {
   const [numLookBackDays, setNumLookBackDays] = useState<number>(7);
   const [allFailures, setAllFailures] = useState<GraphDataRow[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false); // **NEW**: State to control the view
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -129,7 +131,9 @@ export default function PresageRecentSummaryGraphs() {
 
       {allFailures.length === 0 ? (
         <Card>
+
           <CardHeader>
+            {isEditMode && <DeleteIcon className='border  border-2 rounded-lg text-red-500'></DeleteIcon>}
             <CardTitle>All Clear! ✅</CardTitle>
           </CardHeader>
           <CardContent>
@@ -141,6 +145,7 @@ export default function PresageRecentSummaryGraphs() {
           {/* --- **MERGED FAILING TESTS SECTION** --- */}
           <Card>
             <CardHeader>
+              {isEditMode && <DeleteIcon className='border  border-2 rounded-lg text-red-500'></DeleteIcon>}
               <CardTitle>
                 {showAll ? 'All Failing Tests' : 'Top 5 Failing Tests'} (Last {numLookBackDays} Days)
               </CardTitle>
@@ -184,6 +189,7 @@ export default function PresageRecentSummaryGraphs() {
           
           <Card>
             <CardHeader>
+              {isEditMode && <DeleteIcon className='border  border-2 rounded-lg text-red-500'></DeleteIcon>}
               <CardTitle>Failure Heatmap by Location</CardTitle>
             </CardHeader>
             <CardContent>

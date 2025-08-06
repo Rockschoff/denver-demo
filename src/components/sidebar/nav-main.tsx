@@ -49,7 +49,7 @@ export function NavMain({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
+                <SidebarMenuButton tooltip={item.title} onClick={() => {if(item.items?.length == 0 ){setSelection({ item: item.title, parent: item.title, url: item.url })}}}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
                   {item.items && item.items.length > 0 && (

@@ -24,6 +24,8 @@ import ComplaintsDashboard from "@/components/complaints/complaintsDashboard"
 import { useCurrentPageSelection } from "@/lib/zustandStores";
 import AuditCenter from "@/components/auditCenter/auditCenter"
 import GraphCreator from "@/components/graphCreator/graphCreator"
+import HomePage from "@/components/home/HomePage"
+import SuperUseControls from "@/components/supserUserControls/superUserControls"
 
 export default function Page() {
   const [isChatOpen, setIsChatOpen] = useState(false)
@@ -44,12 +46,17 @@ export default function Page() {
         return <AuditCenter />;
       case "Graph Creator":
         return <GraphCreator />;
+      case "Home":
+        return <HomePage />;
+      case "Super User Controls":
+        return <SuperUseControls />;
       default:
         // You can return a default view or null
         return (
-            <div className="flex items-center justify-center h-full">
-                <p className="text-muted-foreground">Select an item from the sidebar to view a dashboard.</p>
-            </div>
+            // <div className="flex items-center justify-center h-full">
+            //     <p className="text-muted-foreground">Select an item from the sidebar to view a dashboard.</p>
+            // </div>
+            <HomePage/>
         );
     }
   };
@@ -94,7 +101,7 @@ export default function Page() {
           </div>
           {/* The chat section will slide in from the right when toggled */}
           {isChatOpen && (
-            <div className="w-full md:w-1/3 lg:w-1/4 bg-secondary h-full overflow-y-auto animate-slide-in border-l">
+            <div className="w-[35vw] bg-secondary h-full overflow-y-auto animate-slide-in border-l">
               <ChatSection />
             </div>
           )}

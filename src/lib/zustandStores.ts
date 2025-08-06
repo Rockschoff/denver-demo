@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // app/lib/ZustandStates/useCurrentPageSelection.ts
 
 import { create } from 'zustand'
@@ -49,3 +50,24 @@ export const useCurrentPageSelection = create<PageSelectionState>((set) => ({
       selectedUrl: null,
     }),
 }))
+
+import { persist } from "zustand/middleware";
+
+export type SavedGraph = { name: string; data: any[] };
+
+interface GraphState {
+  graphs: SavedGraph[];
+  addGraph: (g: SavedGraph) => void;
+  clearGraphs: () => void;
+}
+
+export const useGraphStore = create<GraphState>()(
+  persist(
+    (set) => ({
+      graphs: [],
+      addGraph: (graph) => set((state) => ({ graphs: [...state.graphs, graph] })),
+      clearGraphs: () => set({ graphs: [] }),
+    }),
+    { name: "graph-storage" }  // key in localStorage
+  )
+);

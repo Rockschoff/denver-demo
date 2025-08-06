@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -64,6 +65,7 @@ the two multi line time seirec graphs will be intercative and function to group 
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import { SavedCharts } from "../graphCreator/savedChart";
 import {
   Card,
   CardContent,
@@ -126,6 +128,7 @@ import { DateRange } from "react-day-picker";
 // This is a placeholder for your actual Snowflake client function.
 // It's now assumed to return a promise that resolves to an object like { data: [...] }.
 import { executeSnowflakeQuery } from "@/lib/snowflakeClient";
+import { useGraphStore } from "@/lib/zustandStores";
 
 
 // --- TYPE DEFINITIONS ---
@@ -200,6 +203,7 @@ export default function IgnitionDashboard() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
+  const [showSavedGraphs , setShowSavedGraphs] = useState(false)
 
   useEffect(() => {
     const fetchSummaryData = async () => {
@@ -265,6 +269,10 @@ export default function IgnitionDashboard() {
   return (
     <div className="container mx-auto p-4 space-y-6">
       <h1 className="text-3xl font-bold">Ignition</h1>
+      <p className="text-blue-500 hover:underline cursor-pointer" onClick={()=>{setShowSavedGraphs(!showSavedGraphs)}}>Show Saved Graphs</p>
+      {showSavedGraphs??(<div className="w-full p-4 rounded-2xl">
+        <SavedCharts/>
+      </div>)}
       
       <Card>
         <CardHeader>

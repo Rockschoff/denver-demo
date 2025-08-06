@@ -11,6 +11,7 @@ import { buildWhereClause } from '@/lib/utils'; // Assuming you placed the helpe
 // Shadcn UI for Bar Chart time grouping
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
+import { DeleteIcon } from 'lucide-react';
 
 // Type Definitions
 type FormValues = {
@@ -24,6 +25,7 @@ type FormValues = {
 
 interface PresageGraphsProps {
   filters: FormValues;
+  isEditMode : boolean
 }
 
 type GraphDataRow = {
@@ -42,7 +44,7 @@ type TimeGroupBy = 'Week' | 'Month' | 'Quarter';
 
 // --- Graph Component Logic ---
 
-export function PresageGraphs({ filters }: PresageGraphsProps) {
+export function PresageGraphs({ filters, isEditMode }: PresageGraphsProps) {
   const [graphData, setGraphData] = useState<Record<string, GraphDataRow[]>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -111,7 +113,7 @@ export function PresageGraphs({ filters }: PresageGraphsProps) {
       {Object.keys(graphData).map((testName) => (
         <div key={testName} className="p-6 border rounded-lg">
           <h2 className="text-2xl font-bold mb-6">{testName}</h2>
-
+          {isEditMode && <DeleteIcon className='border  border-2 rounded-lg text-red-500'></DeleteIcon>}
           {/* --- Graph Group 1: Scatter Plot --- */}
           <div className="mb-12">
              <h3 className="text-lg font-semibold mb-4">Result Value vs. Date</h3>
@@ -121,6 +123,7 @@ export function PresageGraphs({ filters }: PresageGraphsProps) {
           {/* --- Graph Group 2: Bar Chart --- */}
           <div>
             <div className="flex justify-between items-center mb-4">
+                {isEditMode && <DeleteIcon className='border  border-2 rounded-lg text-red-500'></DeleteIcon>}
                 <h3 className="text-lg font-semibold">Entries with Result Status not ALLOWED</h3>
                 <RadioGroup defaultValue="Month" onValueChange={(value: TimeGroupBy) => setTimeGroupBy(value)} className="flex items-center gap-4">
                     <div className="flex items-center space-x-2"><RadioGroupItem value="Week" id={`r1-${testName}`} /><Label htmlFor={`r1-${testName}`}>Week</Label></div>
