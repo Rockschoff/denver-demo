@@ -55,15 +55,13 @@ import { persist } from "zustand/middleware";
 
 export type SavedGraph = {
   name: string;
-  data: { X: any; Y: number; Y2?: number }[];
+  data: any[];
   agg1: string;
   agg2?: string;
+  y1Name: string;
+  y2Name?: string;
   useSecondary: boolean;
-  showTrend ?:boolean,
-  showMA ?: boolean,
-  maWindows? : number[],
 };
-
 interface GraphState {
   graphs: SavedGraph[];
   addGraph: (g: SavedGraph) => void;
@@ -77,6 +75,8 @@ export const useGraphStore = create<GraphState>()(
       addGraph: (graph) => set((state) => ({ graphs: [...state.graphs, graph] })),
       clearGraphs: () => set({ graphs: [] }),
     }),
-    { name: "graph-storage" }  // key in localStorage
+    {
+      name: "graph-storage", // The key in localStorage
+    }
   )
 );
