@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useCurrentPageSelection } from '@/lib/zustandStores';
 // import { HeatmapChart } from '@/components/graphs/HeatmapChart'; // Adjust path if needed
 
 // --- Queries (as provided in the prompt) ---
@@ -29,7 +30,7 @@ GROUP BY "CHECK_TYPE", "PART_LINE"
 
 const heatMapQueries = [
     {
-        systemName : "PRESAGE",
+        systemName : "Presage",
         query : `
 SELECT
     COALESCE(TEST_NAME, 'Unlabeled') AS "TEST_NAME",
@@ -42,20 +43,6 @@ GROUP BY "TEST_NAME", "LOCATION";
 `,
         xField: 'LOCATION',
         yField: 'TEST_NAME',
-    },
-    {
-        systemName : "HOLDS",
-        query : `
-SELECT
-    COALESCE(LINE, 'Unlabeled') AS "LINE",
-    COALESCE(REASONFORACTION, 'Unlabeled') AS "REASONFORACTION",
-    SUM(CASES) AS "VALUE"
-FROM HOLDS
-WHERE CREATED >= '{startDate}' AND CREATED <= '{endDate}'
-GROUP BY "LINE", "REASONFORACTION";
-`,
-        xField: 'REASONFORACTION',
-        yField: 'LINE',
     },
     {
         systemName : "CAPA",
@@ -72,13 +59,7 @@ GROUP BY "CAPALINES", "CATEGORY";
         yField: 'CAPALINES',
     },
     {
-        systemName : "IGNITION",
-        query : queries.join(' UNION ALL '),
-        xField: 'PART_LINE',
-        yField: 'CHECK_TYPE',
-    },
-    {
-        systemName : "COMPLAINTS",
+        systemName : "Complaints",
         query : `
 SELECT
     COALESCE(SUBJECT_LEVEL_3, 'Unlabeled') AS "SUBJECT_LEVEL_3",
@@ -90,7 +71,29 @@ GROUP BY "SUBJECT_LEVEL_3", "PRODUCT_INFO";
 `,
         xField: 'PRODUCT_INFO',
         yField: 'SUBJECT_LEVEL_3',
-    }
+    },
+    {
+        systemName : "Holds",
+        query : `
+SELECT
+    COALESCE(LINE, 'Unlabeled') AS "LINE",
+    COALESCE(REASONFORACTION, 'Unlabeled') AS "REASONFORACTION",
+    SUM(CASES) AS "VALUE"
+FROM HOLDS
+WHERE CREATED >= '{startDate}' AND CREATED <= '{endDate}'
+GROUP BY "LINE", "REASONFORACTION";
+`,
+        xField: 'REASONFORACTION',
+        yField: 'LINE',
+    },
+    
+    {
+        systemName : "Ignition",
+        query : queries.join(' UNION ALL '),
+        xField: 'PART_LINE',
+        yField: 'CHECK_TYPE',
+    },
+    
 ];
 
 // --- DYNAMIC IMPORT FOR THE CHART COMPONENT ---
@@ -116,7 +119,7 @@ const trafficLightData = [
   { systemName: "Presage", score: 0, unit: "Failures", color: "green" },
   { systemName: "Ignition", score: 0, unit: "OOS", color: "green" },
   { systemName: "Complaints", score: 8, unit: "in last 30 days", color: "orange" },
-  { systemName: "Open Holds", score: 2, unit: "open holds", color: "orange" },
+  { systemName: "Holds", score: 2, unit: "open holds", color: "orange" },
   { systemName: "CAPA", score: 0, unit: "Overdue", color: "green" },
 ];
 
@@ -125,6 +128,7 @@ export default function HomePage() {
     const [chartData, setChartData] = useState<ChartData | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const setSelection = useCurrentPageSelection(s=>s.setSelection)
 
     const { startDate, endDate, yearAgo } = useMemo(() => {
         const end = new Date();
@@ -240,7 +244,7 @@ export default function HomePage() {
             {!isLoading && !error && chartData && (
                 <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
                     {heatMapQueries.map(({ systemName, xField, yField }) => (
-                        <Card key={systemName} className="flex flex-col h-auto">
+                        <Card key={systemName} className="flex flex-col h-auto" onClick={()=>{setSelection({item : systemName , parent : "Systems" , url : "#"})}}>
                             <CardHeader>
                                 <CardTitle>{systemName}</CardTitle>
                             </CardHeader>
